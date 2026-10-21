@@ -42,6 +42,7 @@ All models were evaluated on the identical held-out 20% test split ($N_{test} = 
 
 ```
 ml final project/
+├── run.bat                         # 1-Click Windows application launcher
 ├── app.py                          # Full-featured interactive Streamlit Web Application
 ├── requirements.txt                # Production Python dependencies
 ├── pytest.ini                      # Pytest discovery configuration
@@ -122,29 +123,22 @@ Run the 21 automated unit and integration tests:
 pytest -v tests/
 ```
 
-### 5. Launch the Web Applications
+### 5. Launch the Web Application
 
-You have two frontend interfaces available:
+Launch the interactive Streamlit valuation dashboard:
 
-#### Option A: Next-Gen React.js Application (Recommended)
-1. Start the Python REST API server (port 5000):
+**Option A (1-Click Launcher on Windows):**
+Double-click `run.bat` or run in terminal:
 ```bash
-python api_server.py 5000
+.\run.bat
 ```
-2. In a separate terminal, launch the React Vite frontend (port 5173):
-```bash
-cd frontend
-npm install
-npm run dev
-```
-Open **`http://localhost:5173`** in your browser.
 
-#### Option B: Streamlit Dashboard
-Launch the standalone Streamlit dashboard:
+**Option B (Streamlit CLI):**
 ```bash
 streamlit run app.py
 ```
-Open **`http://localhost:8501`** in your browser.
+
+The web dashboard will automatically open in your browser at **`http://localhost:8501`**.
 
 ---
 
