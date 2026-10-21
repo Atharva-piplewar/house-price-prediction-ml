@@ -1,0 +1,36 @@
+{
+    "dataset_name": "Ames Housing Dataset (Kaggle Advanced Regression)",
+    "total_raw_samples": 1460,
+    "total_raw_columns": 81,
+    "selected_numerical_features_raw": 14,
+    "selected_categorical_features": 10,
+    "engineered_numerical_features": 16,
+    "total_transformed_features": 82,
+    "train_samples": 1168,
+    "test_samples": 292,
+    "train_split_ratio": 0.8,
+    "test_split_ratio": 0.2,
+    "random_state": 42,
+    "missing_values_before_cleaning": {
+        "Alley": 1369
+    },
+    "missing_values_after_cleaning": 0,
+    "target_variable": "SalePrice (USD)",
+    "target_stats": {
+        "mean": 180921.19589041095,
+        "std": 79442.50288288662,
+        "median": 163000.0,
+        "min": 34900.0,
+        "max": 755000.0,
+        "q25": 129975.0,
+        "q75": 214000.0
+    },
+    "preprocessing_decisions": [
+        "Numerical features imputed with training set median to resist skew/outliers.",
+        "Numerical features standardized with StandardScaler (zero mean, unit variance).",
+        "Categorical missing values imputed with constant 'None' to denote absence of feature (e.g. Alley).",
+        "Categoricals encoded using OneHotEncoder with handle_unknown='ignore' to guarantee safe inference on unseen categories.",
+        "Transformations fitted strictly on 80% training split to eliminate data leakage.",
+        "Derived property age and remodel age from construction years to reflect physical depreciation."
+    ]
+}

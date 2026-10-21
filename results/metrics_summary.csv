@@ -1,0 +1,6 @@
+Model,MAE,MSE,RMSE,R2,Training_Time_Sec,Prediction_Time_Sec,Model_File
+Linear Regression,20152.59,1100210323.67,33169.42,0.8566,0.0144,0.00036,linear_regression.joblib
+Random Forest,17603.63,858969818.42,29308.19,0.888,0.3168,0.04354,random_forest.joblib
+Support Vector Regression,18350.07,1621728188.84,40270.69,0.7886,0.0967,0.03378,support_vector_regression.joblib
+Gradient Boosting,16566.74,682235557.16,26119.64,0.9111,0.7015,0.00185,gradient_boosting.joblib
+XGBoost,16394.81,657141952.0,25634.78,0.9143,0.2666,0.00163,xgboost.joblib
