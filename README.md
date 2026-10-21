@@ -122,11 +122,29 @@ Run the 21 automated unit and integration tests:
 pytest -v tests/
 ```
 
-### 5. Launch the Interactive Web Application
-Launch the Streamlit dashboard in your default browser:
+### 5. Launch the Web Applications
+
+You have two frontend interfaces available:
+
+#### Option A: Next-Gen React.js Application (Recommended)
+1. Start the Python REST API server (port 5000):
+```bash
+python api_server.py 5000
+```
+2. In a separate terminal, launch the React Vite frontend (port 5173):
+```bash
+cd frontend
+npm install
+npm run dev
+```
+Open **`http://localhost:5173`** in your browser.
+
+#### Option B: Streamlit Dashboard
+Launch the standalone Streamlit dashboard:
 ```bash
 streamlit run app.py
 ```
+Open **`http://localhost:8501`** in your browser.
 
 ---
 
