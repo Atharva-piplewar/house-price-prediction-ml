@@ -423,6 +423,28 @@ with st.sidebar:
     )
     
     st.markdown("---")
+    st.markdown("#### 💱 Currency Selection")
+    currency_mode = st.radio(
+        "Display Currency:",
+        ["₹ INR (Indian Rupee)", "$ USD (US Dollar)"],
+        index=0,
+        horizontal=True
+    )
+    is_inr = "INR" in currency_mode
+    USD_TO_INR = 84.0
+
+    def format_curr(usd_val, compact=True):
+        if is_inr:
+            inr = usd_val * USD_TO_INR
+            if compact:
+                if inr >= 10000000:
+                    return f"₹{inr/10000000:.2f} Cr"
+                elif inr >= 100000:
+                    return f"₹{inr/100000:.2f} Lakh"
+            return f"₹{inr:,.0f}"
+        return f"${usd_val:,.2f}" if not compact else f"${usd_val:,.0f}"
+
+    st.markdown("---")
     st.markdown("#### 🤖 Machine Learning Model")
     model_selection = st.selectbox(
         "Active Estimator:",
@@ -462,7 +484,7 @@ with st.sidebar:
     
     st.markdown("<br>", unsafe_allow_html=True)
     if os.path.exists(HERO_BANNER_PATH):
-        st.image(HERO_BANNER_PATH, caption="Ames Architectural Showcase", use_container_width=True)
+        st.image(HERO_BANNER_PATH, caption="Ames Architectural Showcase", width='stretch')
 
 
 # ==============================================================================
@@ -603,7 +625,7 @@ with tab_calc:
             lot_config = st.selectbox("Lot Configuration:", ['Inside', 'Corner', 'CulDSac', 'FR2', 'FR3'], index=0)
             land_contour = st.selectbox("Land Contour:", ['Lvl', 'Bnk', 'HLS', 'Low'], format_func=lambda x: {"Lvl": "Level / Flat", "Bnk": "Banked", "HLS": "Hillside", "Low": "Depression"}.get(x, x))
 
-        submitted = st.form_submit_button("⚡ Calculate Property Valuation", use_container_width=True, type="primary")
+        submitted = st.form_submit_button("⚡ Calculate Property Valuation", width='stretch', type="primary")
 
     property_input = {
         "GrLivArea": gr_liv_area,
@@ -652,12 +674,17 @@ with tab_calc:
             best_val = comp_df[comp_df["Algorithm"] == "XGBoost"]["Estimated Valuation"].iloc[0]
             avg_val = comp_df["Estimated Valuation"].mean()
             
+            best_display = format_curr(best_val)
+            best_sub = f"₹{best_val * USD_TO_INR:,.0f} INR &bull; (≈ ${best_val:,.0f} USD)" if is_inr else f"≈ ₹{best_val * USD_TO_INR:,.0f} INR"
+            band_low = format_curr(max(10000.0, best_val - 25635))
+            band_high = format_curr(best_val + 25635)
+            
             st.markdown(f"""
             <div class="valuation-glow-card">
                 <div class="val-model-tag">Consensus Primary Valuation &bull; XGBoost Champion Engine</div>
-                <div class="val-hero-digits">${best_val:,.2f} USD</div>
-                <div class="val-meta-text">Multi-Model Ensemble Mean: <b>${avg_val:,.2f}</b> &bull; Variance Range: <b>${comp_df['Estimated Valuation'].max() - comp_df['Estimated Valuation'].min():,.0f}</b></div>
-                <div class="val-range-capsule">Expected Accuracy Range (± RMSE): <b>${best_val - 25635:,.0f} &mdash; ${best_val + 25635:,.0f} USD</b></div>
+                <div class="val-hero-digits">{best_display}</div>
+                <div class="val-meta-text">{best_sub} &bull; Multi-Model Mean: <b>{format_curr(avg_val)}</b></div>
+                <div class="val-range-capsule">Expected Accuracy Range (± RMSE): <b>{band_low} &mdash; {band_high}</b></div>
             </div>
             """, unsafe_allow_html=True)
             
@@ -665,15 +692,17 @@ with tab_calc:
             fig, ax = plt.subplots(figsize=(9, 3.6), facecolor="#030712")
             ax.set_facecolor("#030712")
             colors = ["#38bdf8", "#34d399", "#a855f7", "#f59e0b", "#f43f5e"]
-            bars = ax.barh(comp_df["Algorithm"], comp_df["Estimated Valuation"], color=colors, height=0.55, edgecolor="#1f2937")
-            ax.set_xlabel("Predicted Property Valuation ($ USD)", color="#cbd5e1", fontweight="bold", fontsize=11)
+            plot_vals = comp_df["Estimated Valuation"] * (USD_TO_INR if is_inr else 1.0)
+            bars = ax.barh(comp_df["Algorithm"], plot_vals, color=colors, height=0.55, edgecolor="#1f2937")
+            ax.set_xlabel(f"Predicted Property Valuation ({'₹ INR' if is_inr else '$ USD'})", color="#cbd5e1", fontweight="bold", fontsize=11)
             ax.tick_params(colors="#94a3b8", labelsize=10)
             for spine in ax.spines.values():
                 spine.set_color("#1f2937")
-            for bar in bars:
+            for bar, orig_usd in zip(bars, comp_df["Estimated Valuation"]):
                 w = bar.get_width()
-                ax.text(w + 2500, bar.get_y() + bar.get_height() / 2, f"${w:,.0f}", va="center", color="#f8fafc", fontsize=9, fontweight="bold")
-            ax.set_xlim(0, max(comp_df["Estimated Valuation"]) * 1.18)
+                label_txt = format_curr(orig_usd)
+                ax.text(w * 1.02, bar.get_y() + bar.get_height() / 2, label_txt, va="center", color="#f8fafc", fontsize=9, fontweight="bold")
+            ax.set_xlim(0, max(plot_vals) * 1.25)
             plt.tight_layout()
             st.pyplot(fig)
             plt.close()
@@ -682,21 +711,25 @@ with tab_calc:
             selected_m = None if "Auto" in model_selection else model_selection.replace(" Regressor", "").replace(" (RBF)", "")
             res = predict_house_price(property_input, model_name=selected_m)
             price = res['predicted_price_usd']
+            price_display = format_curr(price)
+            price_sub = f"₹{price * USD_TO_INR:,.0f} INR &bull; (≈ ${price:,.0f} USD)" if is_inr else f"≈ ₹{price * USD_TO_INR:,.0f} INR"
+            band_low = format_curr(max(10000.0, price - 25635))
+            band_high = format_curr(price + 25635)
             
             st.markdown(f"""
             <div class="valuation-glow-card">
                 <div class="val-model-tag">Fair Market Valuation ({res['model_used']})</div>
-                <div class="val-hero-digits">${price:,.2f} USD</div>
-                <div class="val-meta-text">Calibrated on authentic Ames, Iowa Real Estate transactions &bull; Denominated in USD</div>
-                <div class="val-range-capsule">Expected Accuracy Range (± RMSE): <b>${price - 25635:,.0f} &mdash; ${price + 25635:,.0f}</b></div>
+                <div class="val-hero-digits">{price_display}</div>
+                <div class="val-meta-text">{price_sub}</div>
+                <div class="val-range-capsule">Expected Accuracy Range (± RMSE): <b>{band_low} &mdash; {band_high}</b></div>
             </div>
             """, unsafe_allow_html=True)
 
         # Specs & Financial Insights Grid
-        st.markdown("#### 📐 Structural Specifications & Financial Projections")
+        st.markdown(f"#### 📐 Structural Specifications & Financial Projections ({'₹ INR' if is_inr else '$ USD'})")
         total_sf = gr_liv_area + total_bsmt_sf
         eff_price = res['predicted_price_usd'] if 'res' in locals() else best_val
-        price_per_sqft = eff_price / max(1, gr_liv_area)
+        price_per_sqft = (eff_price * USD_TO_INR if is_inr else eff_price) / max(1, gr_liv_area)
         
         # 30-year mortgage assumption at 6.8% with 20% down
         loan_amt = eff_price * 0.80
@@ -705,7 +738,7 @@ with tab_calc:
         monthly_mortgage = loan_amt * (monthly_rate * (1 + monthly_rate)**n_payments) / ((1 + monthly_rate)**n_payments - 1)
         est_tax_monthly = (eff_price * 0.012) / 12
         est_insurance_monthly = 120.0
-        total_monthly = monthly_mortgage + est_tax_monthly + est_insurance_monthly
+        total_monthly = (monthly_mortgage + est_tax_monthly + est_insurance_monthly) * (USD_TO_INR if is_inr else 1.0)
 
         b1, b2, b3, b4 = st.columns(4)
         with b1:
@@ -718,12 +751,14 @@ with tab_calc:
             </div>
             """, unsafe_allow_html=True)
         with b2:
+            sqft_str = f"₹{price_per_sqft:,.0f}" if is_inr else f"${price_per_sqft:.1f}"
+            avg_str = "~₹10,000 / sq ft" if is_inr else "~$120 / sq ft"
             st.markdown(f"""
             <div class="spec-tile">
                 <div class="spec-tile-icon">💵</div>
                 <div class="spec-tile-title">Price per Sq. Ft.</div>
-                <div class="spec-tile-num">${price_per_sqft:.1f}</div>
-                <div class="spec-tile-foot">Ames avg: ~$120 / sq ft</div>
+                <div class="spec-tile-num">{sqft_str}</div>
+                <div class="spec-tile-foot">Ames avg: {avg_str}</div>
             </div>
             """, unsafe_allow_html=True)
         with b3:
@@ -736,11 +771,12 @@ with tab_calc:
             </div>
             """, unsafe_allow_html=True)
         with b4:
+            mo_str = f"₹{total_monthly:,.0f} /mo" if is_inr else f"${total_monthly:,.0f} /mo"
             st.markdown(f"""
             <div class="spec-tile">
                 <div class="spec-tile-icon">🏦</div>
-                <div class="spec-tile-title">Est. Monthly Payment</div>
-                <div class="spec-tile-num">${total_monthly:,.0f} /mo</div>
+                <div class="spec-tile-title">Est. Monthly EMI</div>
+                <div class="spec-tile-num">{mo_str}</div>
                 <div class="spec-tile-foot">P&I + Tax + Ins (20% down)</div>
             </div>
             """, unsafe_allow_html=True)
@@ -765,7 +801,7 @@ with tab_benchmark:
         
         st.dataframe(
             styled_df[["Model", "R² Score", "MAE ($)", "RMSE ($)", "Train Time", "Inference Speed"]],
-            use_container_width=True,
+            width='stretch',
             hide_index=True
         )
 
@@ -808,7 +844,7 @@ with tab_benchmark:
             cv_disp["CV RMSE Std Dev"] = cv_disp["CV_RMSE_Std"].apply(lambda x: f"± ${x:,.2f}")
             cv_disp["Mean CV R²"] = cv_disp["CV_R2_Mean"].apply(lambda x: f"{x:.4f}")
             cv_disp["CV R² Std Dev"] = cv_disp["CV_R2_Std"].apply(lambda x: f"± {x:.4f}")
-            st.dataframe(cv_disp[["Model", "Mean CV R²", "CV R² Std Dev", "Mean CV RMSE", "CV RMSE Std Dev"]], use_container_width=True, hide_index=True)
+            st.dataframe(cv_disp[["Model", "Mean CV R²", "CV R² Std Dev", "Mean CV RMSE", "CV RMSE Std Dev"]], width='stretch', hide_index=True)
 
 # ==============================================================================
 # TAB 3: FEATURE IMPORTANCE & ROI SIMULATOR
@@ -817,7 +853,7 @@ with tab_importance:
     st.markdown("### 🔬 Feature Importance & Renovation ROI Simulator")
     st.markdown("Discover the structural and location factors that dictate property value and simulate renovation ROI.")
     
-    st.image(os.path.join(FIGURES_DIR, "feature_importance.png"), caption="Figure 7: Top 15 Predictor Features Ranked by Relative Importance (XGBoost)", use_container_width=True)
+    st.image(os.path.join(FIGURES_DIR, "feature_importance.png"), caption="Figure 7: Top 15 Predictor Features Ranked by Relative Importance (XGBoost)", width='stretch')
     
     st.markdown("---")
     st.markdown("### 🛠️ Interactive Renovation Value Simulator")
@@ -880,7 +916,7 @@ with tab_eda:
         st.metric("IQR Spread", f"${raw_data['SalePrice'].quantile(0.75) - raw_data['SalePrice'].quantile(0.25):,.0f}")
 
     st.markdown("#### 1. Interactive Raw Data Explorer")
-    st.dataframe(raw_data[["Id", "SalePrice", "OverallQual", "GrLivArea", "TotalBsmtSF", "YearBuilt", "Neighborhood", "HouseStyle"]].head(15), use_container_width=True)
+    st.dataframe(raw_data[["Id", "SalePrice", "OverallQual", "GrLivArea", "TotalBsmtSF", "YearBuilt", "Neighborhood", "HouseStyle"]].head(15), width='stretch')
 
     st.markdown("#### 2. Target Variable (`SalePrice`) Distribution & Quality Breakdown")
     fig_eda, (ax_hist, ax_box) = plt.subplots(1, 2, figsize=(12, 4.5), facecolor="#030712")
@@ -898,7 +934,7 @@ with tab_eda:
     ax_hist.legend(facecolor="#111827", edgecolor="#374151", labelcolor="#f8fafc")
     
     # Boxplot by Quality
-    sns.boxplot(x="OverallQual", y="SalePrice", data=raw_data, palette="Blues_r", ax=ax_box)
+    sns.boxplot(x="OverallQual", y="SalePrice", data=raw_data, hue="OverallQual", palette="Blues_r", legend=False, ax=ax_box)
     ax_box.set_title("SalePrice across Quality Ratings (1-10)", color="#f8fafc", fontweight="bold")
     ax_box.set_xlabel("Overall Quality Rating", color="#cbd5e1")
     ax_box.set_ylabel("SalePrice ($ USD)", color="#cbd5e1")
