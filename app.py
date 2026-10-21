@@ -51,16 +51,16 @@ st.markdown("""
     /* Base Body Styling */
     html, body, [class*="css"] {
         font-family: 'Plus Jakarta Sans', sans-serif !important;
-        color: #f1f5f9 !important;
+        color: #1e293b !important;
     }
     
-    /* Dynamic Mesh Gradient Canvas */
+    /* Dynamic Crisp Canvas */
     .stApp {
-        background-color: #030712 !important;
+        background-color: #f8fafc !important;
         background-image: 
-            radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.14) 0px, transparent 55%),
-            radial-gradient(at 100% 0%, rgba(168, 85, 247, 0.12) 0px, transparent 55%),
-            radial-gradient(at 50% 100%, rgba(6, 182, 212, 0.08) 0px, transparent 55%) !important;
+            radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.05) 0px, transparent 50%),
+            radial-gradient(at 100% 0%, rgba(79, 70, 229, 0.05) 0px, transparent 50%),
+            radial-gradient(at 50% 100%, rgba(14, 165, 233, 0.04) 0px, transparent 50%) !important;
         background-attachment: fixed !important;
     }
     
@@ -69,41 +69,56 @@ st.markdown("""
         font-family: 'Outfit', sans-serif !important;
         letter-spacing: -0.025em !important;
         font-weight: 700 !important;
-        color: #ffffff !important;
+        color: #0f172a !important;
+    }
+
+    /* Paragraphs and labels */
+    p, span, label {
+        color: #334155;
     }
     
     /* Sidebar Overrides */
     section[data-testid="stSidebar"] {
-        background-color: rgba(11, 15, 25, 0.95) !important;
-        border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
-        backdrop-filter: blur(20px) !important;
+        background-color: #ffffff !important;
+        border-right: 1px solid #e2e8f0 !important;
+        box-shadow: 2px 0 16px rgba(15, 23, 42, 0.04) !important;
+    }
+    section[data-testid="stSidebar"] h1, 
+    section[data-testid="stSidebar"] h2, 
+    section[data-testid="stSidebar"] h3, 
+    section[data-testid="stSidebar"] h4 {
+        color: #0f172a !important;
+    }
+    section[data-testid="stSidebar"] p, 
+    section[data-testid="stSidebar"] span, 
+    section[data-testid="stSidebar"] label {
+        color: #334155 !important;
     }
     
-    /* Glass Cards */
+    /* Glass / Crisp Cards */
     .glass-panel {
-        background: rgba(17, 24, 39, 0.65);
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
         border-radius: 18px;
         padding: 1.75rem 2rem;
-        backdrop-filter: blur(16px);
-        box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
         margin-bottom: 1.5rem;
-        transition: border-color 0.2s ease, transform 0.2s ease;
+        transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
     }
     .glass-panel:hover {
-        border-color: rgba(99, 102, 241, 0.3);
+        border-color: #93c5fd;
+        box-shadow: 0 8px 30px -4px rgba(37, 99, 235, 0.12);
     }
     
     /* Hero Header */
     .hero-box {
         position: relative;
-        background: linear-gradient(135deg, rgba(17, 24, 39, 0.85) 0%, rgba(30, 27, 75, 0.7) 100%);
-        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: linear-gradient(135deg, #ffffff 0%, #f0f7ff 50%, #eff6ff 100%);
+        border: 1px solid #bfdbfe;
         border-radius: 22px;
         padding: 2.5rem 2.8rem;
         margin-bottom: 2rem;
-        backdrop-filter: blur(24px);
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        box-shadow: 0 12px 35px -8px rgba(37, 99, 235, 0.12), 0 2px 8px rgba(0, 0, 0, 0.03);
         overflow: hidden;
     }
     
@@ -111,9 +126,9 @@ st.markdown("""
         display: inline-flex;
         align-items: center;
         gap: 0.6rem;
-        background: rgba(99, 102, 241, 0.15);
-        border: 1px solid rgba(99, 102, 241, 0.4);
-        color: #a5b4fc;
+        background: #eff6ff;
+        border: 1px solid #93c5fd;
+        color: #1d4ed8;
         padding: 0.35rem 1rem;
         border-radius: 9999px;
         font-size: 0.82rem;
@@ -126,31 +141,31 @@ st.markdown("""
     .live-pulse {
         width: 8px;
         height: 8px;
-        background-color: #34d399;
+        background-color: #2563eb;
         border-radius: 50%;
-        box-shadow: 0 0 12px #34d399;
+        box-shadow: 0 0 10px #2563eb;
         display: inline-block;
         animation: pulse 2s infinite;
     }
     
     @keyframes pulse {
-        0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.7); }
-        70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(52, 211, 153, 0); }
-        100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
+        0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.6); }
+        70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(37, 99, 235, 0); }
+        100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
     }
     
     .hero-headline {
         font-size: 2.6rem;
         font-weight: 800;
         line-height: 1.15;
-        background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #94a3b8 100%);
+        background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #2563eb 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         margin-bottom: 0.75rem;
     }
     
     .hero-paragraph {
-        color: #94a3b8;
+        color: #475569;
         font-size: 1.1rem;
         line-height: 1.6;
         max-width: 880px;
@@ -165,16 +180,17 @@ st.markdown("""
     }
     
     .ticker-pill {
-        background: rgba(15, 23, 42, 0.75);
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
         border-radius: 14px;
         padding: 0.85rem 1.1rem;
-        backdrop-filter: blur(10px);
-        transition: transform 0.2s ease, border-color 0.2s ease;
+        box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+        transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
     }
     .ticker-pill:hover {
         transform: translateY(-2px);
-        border-color: rgba(99, 102, 241, 0.45);
+        border-color: #3b82f6;
+        box-shadow: 0 6px 16px -2px rgba(37, 99, 235, 0.12);
     }
     
     .ticker-label {
@@ -186,28 +202,27 @@ st.markdown("""
     }
     
     .ticker-val {
-        font-size: 1.2rem;
+        font-size: 1.25rem;
         font-weight: 800;
-        color: #f8fafc;
+        color: #0f172a;
         margin-top: 0.25rem;
         font-family: 'Plus Jakarta Sans', sans-serif;
     }
     
     /* Valuation Big Display Card */
     .valuation-glow-card {
-        background: linear-gradient(135deg, rgba(30, 27, 75, 0.85) 0%, rgba(15, 23, 42, 0.95) 100%);
-        border: 2px solid rgba(99, 102, 241, 0.5);
+        background: linear-gradient(135deg, #ffffff 0%, #eff6ff 50%, #f8fafc 100%);
+        border: 2px solid #3b82f6;
         border-radius: 24px;
         padding: 2.8rem 2.2rem;
         text-align: center;
-        box-shadow: 0 20px 50px -10px rgba(99, 102, 241, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-        backdrop-filter: blur(24px);
+        box-shadow: 0 20px 40px -10px rgba(37, 99, 235, 0.16), 0 2px 10px rgba(0, 0, 0, 0.03);
         margin: 2rem 0;
         position: relative;
     }
     
     .val-model-tag {
-        color: #818cf8;
+        color: #2563eb;
         font-size: 0.88rem;
         font-weight: 700;
         text-transform: uppercase;
@@ -218,26 +233,25 @@ st.markdown("""
     .val-hero-digits {
         font-size: 3.8rem;
         font-weight: 800;
-        color: #ffffff;
+        color: #1e3a8a;
         font-family: 'JetBrains Mono', monospace;
         letter-spacing: -0.03em;
-        text-shadow: 0 0 45px rgba(99, 102, 241, 0.5);
         margin: 0.25rem 0;
     }
     
     .val-meta-text {
-        color: #cbd5e1;
+        color: #475569;
         font-size: 0.95rem;
         margin-top: 0.4rem;
     }
     
     .val-range-capsule {
         display: inline-block;
-        background: rgba(99, 102, 241, 0.18);
-        border: 1px solid rgba(99, 102, 241, 0.4);
-        color: #c7d2fe;
+        background: #dbeafe;
+        border: 1px solid #93c5fd;
+        color: #1e40af;
         border-radius: 9999px;
-        padding: 0.4rem 1.25rem;
+        padding: 0.45rem 1.35rem;
         font-size: 0.88rem;
         font-weight: 600;
         margin-top: 1rem;
@@ -245,17 +259,18 @@ st.markdown("""
     
     /* Financial / Spec Cards */
     .spec-tile {
-        background: rgba(17, 24, 39, 0.7);
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
         border-radius: 16px;
         padding: 1.35rem 1.15rem;
         text-align: center;
-        backdrop-filter: blur(12px);
-        transition: transform 0.2s ease, border-color 0.2s ease;
+        box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
+        transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
     }
     .spec-tile:hover {
         transform: translateY(-3px);
-        border-color: rgba(56, 189, 248, 0.4);
+        border-color: #3b82f6;
+        box-shadow: 0 8px 24px -4px rgba(37, 99, 235, 0.12);
     }
     
     .spec-tile-icon {
@@ -265,7 +280,7 @@ st.markdown("""
     
     .spec-tile-title {
         font-size: 0.75rem;
-        color: #94a3b8;
+        color: #64748b;
         text-transform: uppercase;
         letter-spacing: 0.05em;
         font-weight: 700;
@@ -274,97 +289,136 @@ st.markdown("""
     .spec-tile-num {
         font-size: 1.4rem;
         font-weight: 800;
-        color: #f8fafc;
+        color: #0f172a;
         margin-top: 0.25rem;
         font-family: 'JetBrains Mono', sans-serif;
     }
     
     .spec-tile-foot {
         font-size: 0.75rem;
-        color: #64748b;
+        color: #94a3b8;
         margin-top: 0.25rem;
     }
     
     /* Streamlit Input / Widget Deep Styling */
     div[data-baseweb="input"] {
-        background-color: rgba(17, 24, 39, 0.8) !important;
-        border: 1px solid rgba(255, 255, 255, 0.1) !important;
-        border-radius: 12px !important;
+        background-color: #ffffff !important;
+        border: 1px solid #cbd5e1 !important;
+        border-radius: 10px !important;
         transition: all 0.2s ease !important;
     }
     div[data-baseweb="input"]:focus-within {
-        border-color: #6366f1 !important;
-        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25) !important;
+        border-color: #2563eb !important;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18) !important;
+    }
+    div[data-baseweb="input"] input {
+        color: #0f172a !important;
     }
     
     div[data-baseweb="select"] > div {
-        background-color: rgba(17, 24, 39, 0.8) !important;
-        border: 1px solid rgba(255, 255, 255, 0.1) !important;
-        border-radius: 12px !important;
+        background-color: #ffffff !important;
+        border: 1px solid #cbd5e1 !important;
+        border-radius: 10px !important;
+        color: #0f172a !important;
         transition: all 0.2s ease !important;
+    }
+    div[data-baseweb="select"] > div:focus-within {
+        border-color: #2563eb !important;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18) !important;
+    }
+
+    /* Radio button labels & checks */
+    div[data-testid="stRadio"] label {
+        color: #1e293b !important;
+    }
+
+    /* Streamlit Metric Overrides */
+    div[data-testid="stMetric"] {
+        background: #ffffff !important;
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 14px !important;
+        padding: 1.1rem !important;
+        box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03) !important;
+    }
+    div[data-testid="stMetricLabel"] {
+        color: #64748b !important;
+        font-weight: 600 !important;
+        font-size: 0.82rem !important;
+    }
+    div[data-testid="stMetricValue"] {
+        color: #0f172a !important;
+        font-weight: 800 !important;
+        font-family: 'JetBrains Mono', monospace !important;
     }
     
     /* Primary Buttons */
     button[kind="primary"], div.stButton > button {
-        background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #2563eb 100%) !important;
+        background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
         color: #ffffff !important;
         border: none !important;
-        border-radius: 14px !important;
+        border-radius: 12px !important;
         font-weight: 700 !important;
         letter-spacing: -0.01em !important;
         padding: 0.75rem 1.6rem !important;
         font-size: 1rem !important;
-        box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.5) !important;
+        box-shadow: 0 8px 20px -4px rgba(37, 99, 235, 0.4) !important;
         transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
     }
     button[kind="primary"]:hover, div.stButton > button:hover {
         transform: translateY(-2px) !important;
-        box-shadow: 0 15px 35px -5px rgba(79, 70, 229, 0.7) !important;
+        box-shadow: 0 12px 28px -4px rgba(37, 99, 235, 0.55) !important;
+        background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%) !important;
     }
     
     /* Tabs Overhaul */
     .stTabs [data-baseweb="tab-list"] {
-        gap: 0.6rem;
-        background: rgba(15, 23, 42, 0.75);
-        padding: 0.6rem;
-        border-radius: 16px;
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        backdrop-filter: blur(14px);
+        gap: 0.5rem;
+        background: #f1f5f9;
+        padding: 0.45rem;
+        border-radius: 14px;
+        border: 1px solid #e2e8f0;
     }
     
     .stTabs [data-baseweb="tab"] {
-        height: 48px;
-        border-radius: 11px;
-        font-size: 0.95rem;
+        height: 44px;
+        border-radius: 10px;
+        font-size: 0.92rem;
         font-weight: 600;
-        color: #94a3b8;
-        padding: 0 1.35rem;
+        color: #475569;
+        padding: 0 1.25rem;
         transition: all 0.2s ease;
     }
     
     .stTabs [aria-selected="true"] {
-        background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%) !important;
-        color: #ffffff !important;
-        box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4) !important;
+        background: #ffffff !important;
+        color: #1d4ed8 !important;
+        box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08) !important;
+        font-weight: 700 !important;
     }
     
     div[data-testid="stForm"] {
-        background: rgba(15, 23, 42, 0.6);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 20px;
-        padding: 2rem 2.2rem;
-        backdrop-filter: blur(16px);
+        background: #ffffff !important;
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 18px !important;
+        padding: 2rem 2.2rem !important;
+        box-shadow: 0 6px 24px -4px rgba(15, 23, 42, 0.04) !important;
+    }
+
+    div[data-testid="stForm"] h5 {
+        color: #2563eb !important;
+        font-family: 'Outfit', sans-serif !important;
+        font-weight: 700 !important;
     }
     
     /* Academic Disclaimer Banner */
     .disclaimer-banner {
-        background: linear-gradient(135deg, rgba(239, 68, 68, 0.08) 0%, rgba(15, 23, 42, 0.75) 100%);
-        border: 1px solid rgba(239, 68, 68, 0.35);
-        border-left: 6px solid #ef4444;
+        background: linear-gradient(135deg, #fff1f2 0%, #ffffff 100%);
+        border: 1px solid #fecdd3;
+        border-left: 5px solid #ef4444;
         border-radius: 14px;
         padding: 1.4rem 1.6rem;
         margin: 1.5rem 0;
-        backdrop-filter: blur(12px);
+        box-shadow: 0 4px 15px -2px rgba(239, 68, 68, 0.06);
     }
 </style>
 """, unsafe_allow_html=True)
@@ -404,8 +458,8 @@ with st.sidebar:
     <div style="display: flex; align-items: center; gap: 0.85rem; margin-bottom: 1.5rem;">
         <span style="font-size: 2.2rem;">⚡</span>
         <div>
-            <div style="font-size: 1.3rem; font-weight: 800; color: #f8fafc; letter-spacing: -0.02em;">PropVal Studio</div>
-            <div style="font-size: 0.75rem; color: #818cf8; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;">Next-Gen Valuation Engine</div>
+            <div style="font-size: 1.3rem; font-weight: 800; color: #0f172a; letter-spacing: -0.02em;">PropVal Studio</div>
+            <div style="font-size: 0.75rem; color: #2563eb; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;">Next-Gen Valuation Engine</div>
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -462,22 +516,22 @@ with st.sidebar:
     st.markdown("---")
     st.markdown("#### 🛡️ Engineering Safeguards")
     st.markdown("""
-    <div style="background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 14px; padding: 1.1rem; font-size: 0.82rem;">
+    <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 14px; padding: 1.1rem; font-size: 0.82rem; box-shadow: 0 1px 4px rgba(15, 23, 42, 0.04);">
         <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-            <span style="color: #94a3b8;">Leakage Prevention:</span>
-            <span style="color: #38bdf8; font-weight: 700;">Strict 80:20 Split</span>
+            <span style="color: #64748b;">Leakage Prevention:</span>
+            <span style="color: #2563eb; font-weight: 700;">Strict 80:20 Split</span>
         </div>
         <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-            <span style="color: #94a3b8;">Cross Validation:</span>
-            <span style="color: #34d399; font-weight: 700;">5-Fold Stratified</span>
+            <span style="color: #64748b;">Cross Validation:</span>
+            <span style="color: #059669; font-weight: 700;">5-Fold Stratified</span>
         </div>
         <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-            <span style="color: #94a3b8;">Inference Speed:</span>
-            <span style="color: #f8fafc; font-weight: 700;">1.63 ms / sample</span>
+            <span style="color: #64748b;">Inference Speed:</span>
+            <span style="color: #0f172a; font-weight: 700;">1.63 ms / sample</span>
         </div>
         <div style="display: flex; justify-content: space-between;">
-            <span style="color: #94a3b8;">Automated Tests:</span>
-            <span style="color: #34d399; font-weight: 700;">21 / 21 Passed</span>
+            <span style="color: #64748b;">Automated Tests:</span>
+            <span style="color: #059669; font-weight: 700;">21 / 21 Passed</span>
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -505,23 +559,23 @@ st.markdown("""
     <div class="metric-ticker-grid">
         <div class="ticker-pill">
             <div class="ticker-label">🏆 Winning Algorithm</div>
-            <div class="ticker-val" style="color: #818cf8;">XGBoost</div>
+            <div class="ticker-val" style="color: #2563eb;">XGBoost</div>
         </div>
         <div class="ticker-pill">
             <div class="ticker-label">🎯 Test Accuracy (R²)</div>
-            <div class="ticker-val" style="color: #34d399;">0.9143</div>
+            <div class="ticker-val" style="color: #059669;">0.9143</div>
         </div>
         <div class="ticker-pill">
             <div class="ticker-label">📉 Test Error (RMSE)</div>
-            <div class="ticker-val" style="color: #38bdf8;">$25,635</div>
+            <div class="ticker-val" style="color: #0284c7;">$25,635</div>
         </div>
         <div class="ticker-pill">
             <div class="ticker-label">⚡ Inference Latency</div>
-            <div class="ticker-val" style="color: #f59e0b;">1.63 ms</div>
+            <div class="ticker-val" style="color: #d97706;">1.63 ms</div>
         </div>
         <div class="ticker-pill">
             <div class="ticker-label">📍 Geographic Focus</div>
-            <div class="ticker-val" style="color: #f43f5e;">Ames, IA (USD)</div>
+            <div class="ticker-val" style="color: #dc2626;">Ames, IA (USD)</div>
         </div>
     </div>
 </div>
@@ -572,7 +626,7 @@ with tab_calc:
     
     with st.form("valuation_form"):
         # Section 1: Dimensions
-        st.markdown("<h5 style='color: #818cf8; margin-bottom: 0.8rem;'>1. Scale, Layout, and Square Footage</h5>", unsafe_allow_html=True)
+        st.markdown("<h5 style='color: #2563eb; font-weight: 700; margin-bottom: 0.8rem;'>1. Scale, Layout, and Square Footage</h5>", unsafe_allow_html=True)
         c1, c2, c3, c4 = st.columns(4)
         with c1:
             gr_liv_area = st.number_input("Above-Grade Living Area (sq ft):", min_value=350, max_value=7500, value=int(default_vals["GrLivArea"]), step=50)
@@ -588,7 +642,7 @@ with tab_calc:
             garage_cars = st.number_input("Garage Car Capacity:", min_value=0, max_value=4, value=int(default_vals["GarageCars"]))
 
         # Section 2: Quality & Age
-        st.markdown("<h5 style='color: #818cf8; margin-top: 1rem; margin-bottom: 0.8rem;'>2. Quality, Finish & Construction Timeline</h5>", unsafe_allow_html=True)
+        st.markdown("<h5 style='color: #2563eb; font-weight: 700; margin-top: 1rem; margin-bottom: 0.8rem;'>2. Quality, Finish & Construction Timeline</h5>", unsafe_allow_html=True)
         q1, q2, q3, q4 = st.columns(4)
         with q1:
             overall_qual = st.slider("Overall Finish Quality (1: Poor → 10: Excellent):", min_value=1, max_value=10, value=int(default_vals["OverallQual"]))
@@ -600,7 +654,7 @@ with tab_calc:
             year_remod = st.number_input("Year Remodeled / Added:", min_value=int(year_built), max_value=2026, value=max(int(year_built), int(default_vals["YearRemodAdd"])))
 
         # Section 3: Architecture & Location
-        st.markdown("<h5 style='color: #818cf8; margin-top: 1rem; margin-bottom: 0.8rem;'>3. Architecture, Location & Amenities</h5>", unsafe_allow_html=True)
+        st.markdown("<h5 style='color: #2563eb; font-weight: 700; margin-top: 1rem; margin-bottom: 0.8rem;'>3. Architecture, Location & Amenities</h5>", unsafe_allow_html=True)
         s1, s2, s3, s4 = st.columns(4)
         
         neighborhood_list = [
@@ -688,20 +742,21 @@ with tab_calc:
             </div>
             """, unsafe_allow_html=True)
             
-            # Interactive Multi-Model Plot with Custom Obsidian Palette
-            fig, ax = plt.subplots(figsize=(9, 3.6), facecolor="#030712")
-            ax.set_facecolor("#030712")
-            colors = ["#38bdf8", "#34d399", "#a855f7", "#f59e0b", "#f43f5e"]
+            # Interactive Multi-Model Plot with Bright Crisp Sapphire Palette
+            fig, ax = plt.subplots(figsize=(9, 3.6), facecolor="#ffffff")
+            ax.set_facecolor("#f8fafc")
+            colors = ["#2563eb", "#059669", "#7c3aed", "#d97706", "#dc2626"]
             plot_vals = comp_df["Estimated Valuation"] * (USD_TO_INR if is_inr else 1.0)
-            bars = ax.barh(comp_df["Algorithm"], plot_vals, color=colors, height=0.55, edgecolor="#1f2937")
-            ax.set_xlabel(f"Predicted Property Valuation ({'₹ INR' if is_inr else '$ USD'})", color="#cbd5e1", fontweight="bold", fontsize=11)
-            ax.tick_params(colors="#94a3b8", labelsize=10)
+            bars = ax.barh(comp_df["Algorithm"], plot_vals, color=colors, height=0.55, edgecolor="#cbd5e1")
+            ax.set_xlabel(f"Predicted Property Valuation ({'₹ INR' if is_inr else '$ USD'})", color="#0f172a", fontweight="bold", fontsize=11)
+            ax.tick_params(colors="#334155", labelsize=10)
             for spine in ax.spines.values():
-                spine.set_color("#1f2937")
+                spine.set_color("#e2e8f0")
+            ax.grid(axis='x', color="#e2e8f0", linestyle='--', alpha=0.7)
             for bar, orig_usd in zip(bars, comp_df["Estimated Valuation"]):
                 w = bar.get_width()
                 label_txt = format_curr(orig_usd)
-                ax.text(w * 1.02, bar.get_y() + bar.get_height() / 2, label_txt, va="center", color="#f8fafc", fontsize=9, fontweight="bold")
+                ax.text(w * 1.02, bar.get_y() + bar.get_height() / 2, label_txt, va="center", color="#0f172a", fontsize=9, fontweight="bold")
             ax.set_xlim(0, max(plot_vals) * 1.25)
             plt.tight_layout()
             st.pyplot(fig)
@@ -892,10 +947,10 @@ with tab_importance:
         diff = upgraded_pred - base_pred
         
         st.markdown(f"""
-        <div style="background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(52, 211, 153, 0.35); border-radius: 16px; padding: 1.8rem; text-align: center; box-shadow: 0 10px 30px rgba(52, 211, 153, 0.15);">
-            <div style="font-size: 0.82rem; color: #94a3b8; text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em;">Estimated Valuation Appreciation</div>
-            <div style="font-size: 2.4rem; font-weight: 800; color: #34d399; font-family: 'JetBrains Mono'; margin: 0.25rem 0;">+${diff:,.2f} USD</div>
-            <div style="font-size: 0.95rem; color: #cbd5e1;">Baseline: <b>${base_pred:,.0f}</b> &rarr; Post-Upgrade: <b>${upgraded_pred:,.0f} USD</b></div>
+        <div style="background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 100%); border: 1.5px solid #86efac; border-radius: 16px; padding: 1.8rem; text-align: center; box-shadow: 0 8px 25px -4px rgba(16, 185, 129, 0.12);">
+            <div style="font-size: 0.82rem; color: #047857; text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em;">Estimated Valuation Appreciation</div>
+            <div style="font-size: 2.4rem; font-weight: 800; color: #059669; font-family: 'JetBrains Mono'; margin: 0.25rem 0;">+${diff:,.2f} USD</div>
+            <div style="font-size: 0.95rem; color: #475569;">Baseline: <b style="color: #0f172a;">${base_pred:,.0f}</b> &rarr; Post-Upgrade: <b style="color: #059669;">${upgraded_pred:,.0f} USD</b></div>
         </div>
         """, unsafe_allow_html=True)
 
@@ -919,25 +974,26 @@ with tab_eda:
     st.dataframe(raw_data[["Id", "SalePrice", "OverallQual", "GrLivArea", "TotalBsmtSF", "YearBuilt", "Neighborhood", "HouseStyle"]].head(15), width='stretch')
 
     st.markdown("#### 2. Target Variable (`SalePrice`) Distribution & Quality Breakdown")
-    fig_eda, (ax_hist, ax_box) = plt.subplots(1, 2, figsize=(12, 4.5), facecolor="#030712")
+    fig_eda, (ax_hist, ax_box) = plt.subplots(1, 2, figsize=(12, 4.5), facecolor="#ffffff")
     for ax in (ax_hist, ax_box):
-        ax.set_facecolor("#030712")
-        ax.tick_params(colors="#94a3b8")
+        ax.set_facecolor("#f8fafc")
+        ax.tick_params(colors="#334155")
         for spine in ax.spines.values():
-            spine.set_color("#1f2937")
+            spine.set_color("#e2e8f0")
+        ax.grid(color="#e2e8f0", linestyle='--', alpha=0.6)
             
     # Histogram
-    sns.histplot(raw_data["SalePrice"], kde=True, color="#38bdf8", ax=ax_hist, bins=35)
-    ax_hist.set_title("SalePrice Distribution (Right-Skewed)", color="#f8fafc", fontweight="bold")
-    ax_hist.set_xlabel("SalePrice ($ USD)", color="#cbd5e1")
-    ax_hist.axvline(raw_data["SalePrice"].median(), color="#f43f5e", linestyle="--", label=f"Median: ${raw_data['SalePrice'].median():,.0f}")
-    ax_hist.legend(facecolor="#111827", edgecolor="#374151", labelcolor="#f8fafc")
+    sns.histplot(raw_data["SalePrice"], kde=True, color="#2563eb", ax=ax_hist, bins=35)
+    ax_hist.set_title("SalePrice Distribution (Right-Skewed)", color="#0f172a", fontweight="bold")
+    ax_hist.set_xlabel("SalePrice ($ USD)", color="#334155")
+    ax_hist.axvline(raw_data["SalePrice"].median(), color="#dc2626", linestyle="--", label=f"Median: ${raw_data['SalePrice'].median():,.0f}")
+    ax_hist.legend(facecolor="#ffffff", edgecolor="#cbd5e1", labelcolor="#0f172a")
     
     # Boxplot by Quality
-    sns.boxplot(x="OverallQual", y="SalePrice", data=raw_data, hue="OverallQual", palette="Blues_r", legend=False, ax=ax_box)
-    ax_box.set_title("SalePrice across Quality Ratings (1-10)", color="#f8fafc", fontweight="bold")
-    ax_box.set_xlabel("Overall Quality Rating", color="#cbd5e1")
-    ax_box.set_ylabel("SalePrice ($ USD)", color="#cbd5e1")
+    sns.boxplot(x="OverallQual", y="SalePrice", data=raw_data, hue="OverallQual", palette="Blues", legend=False, ax=ax_box)
+    ax_box.set_title("SalePrice across Quality Ratings (1-10)", color="#0f172a", fontweight="bold")
+    ax_box.set_xlabel("Overall Quality Rating", color="#334155")
+    ax_box.set_ylabel("SalePrice ($ USD)", color="#334155")
     
     plt.tight_layout()
     st.pyplot(fig_eda)
@@ -951,12 +1007,12 @@ with tab_docs:
     
     st.markdown("""
     <div class="disclaimer-banner">
-        <h4 style="color: #f87171; margin-top: 0; font-size: 1.15rem;">⚠️ Academic Disclosures & Real-World Domain Boundaries</h4>
-        <ol style="color: #cbd5e1; margin-bottom: 0; line-height: 1.65;">
-            <li><b>Geographic & Currency Calibration</b>: Models are calibrated on transactions from Ames, Iowa (United States) denominated strictly in <b>US Dollars ($ USD)</b>. Predictions cannot be treated as valid valuations for Indian properties (INR), which are governed by disparate regulatory systems (RERA), floor rise indices, municipal circle rates, and metro transit premiums.</li>
-            <li><b>Inland Midwest Geography (Absence of Coastal Views)</b>: Ames is an inland Midwestern city. There are <b>no ocean, sea, or coastal attributes</b> in this dataset. We honestly document this limitation rather than fabricating synthetic ocean-view values.</li>
-            <li><b>Constructed Residential Dwellings vs. Vacant Land</b>: All records represent constructed residential dwellings with foundations and structures. Vacant plots and agricultural land valuation are out of scope.</li>
-            <li><b>California Housing Fallback Distinction</b>: California housing evaluates 1990 district census blocks measured in units of $100,000. California metrics are never mixed into the Ames Housing evaluation table.</li>
+        <h4 style="color: #b91c1c; margin-top: 0; font-size: 1.15rem; font-weight: 700;">⚠️ Academic Disclosures & Real-World Domain Boundaries</h4>
+        <ol style="color: #475569; margin-bottom: 0; line-height: 1.65;">
+            <li><b style="color: #0f172a;">Geographic & Currency Calibration</b>: Models are calibrated on transactions from Ames, Iowa (United States) denominated strictly in <b>US Dollars ($ USD)</b>. Predictions cannot be treated as valid valuations for Indian properties (INR), which are governed by disparate regulatory systems (RERA), floor rise indices, municipal circle rates, and metro transit premiums.</li>
+            <li><b style="color: #0f172a;">Inland Midwest Geography (Absence of Coastal Views)</b>: Ames is an inland Midwestern city. There are <b>no ocean, sea, or coastal attributes</b> in this dataset. We honestly document this limitation rather than fabricating synthetic ocean-view values.</li>
+            <li><b style="color: #0f172a;">Constructed Residential Dwellings vs. Vacant Land</b>: All records represent constructed residential dwellings with foundations and structures. Vacant plots and agricultural land valuation are out of scope.</li>
+            <li><b style="color: #0f172a;">California Housing Fallback Distinction</b>: California housing evaluates 1990 district census blocks measured in units of $100,000. California metrics are never mixed into the Ames Housing evaluation table.</li>
         </ol>
     </div>
     """, unsafe_allow_html=True)
@@ -976,7 +1032,7 @@ with tab_docs:
 # Footer
 st.markdown("---")
 st.markdown(
-    "<div style='text-align: center; color: #64748b; font-size: 0.85rem; padding: 1.25rem 0;'>"
+    "<div style='text-align: center; color: #94a3b8; font-size: 0.85rem; padding: 1.25rem 0; font-weight: 500;'>"
     "PropVal Studio &bull; House Price Prediction Using Machine Learning and Comparative Analysis of Regression Models &bull; Ames Housing Dataset"
     "</div>",
     unsafe_allow_html=True
