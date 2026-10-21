@@ -1,6 +1,6 @@
 """
-Streamlit Web Application: Next-Gen House Price Valuation & Comparative ML Benchmark
-Academic Project: House Price Prediction Using Machine Learning and Comparative Analysis of Regression Models
+Streamlit Web Application: Next-Gen Luxury Real Estate Valuation & Comparative ML Benchmark
+Project: House Price Prediction Using Machine Learning and Comparative Analysis of Regression Models
 Dataset: Ames Housing Dataset (1,460 Residential Homes, 81 Features)
 """
 
@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import streamlit as st
 
-# Configure system path
+# Ensure project root is in sys.path
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 if PROJECT_ROOT not in sys.path:
     sys.path.insert(0, PROJECT_ROOT)
@@ -29,199 +29,241 @@ HERO_BANNER_PATH = os.path.join(FIGURES_DIR, "hero_banner.jpg")
 
 # Streamlit Page Setup
 st.set_page_config(
-    page_title="PropVal ML | Intelligent Real Estate Valuation Engine",
-    page_icon="💎",
+    page_title="PropVal Studio | Next-Gen Real Estate Valuation",
+    page_icon="⚡",
     layout="wide",
     initial_sidebar_state="expanded",
 )
 
-# Custom Ultra-Modern Styling
+# Deep Custom Modern Dark Mode & Component Injections
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
     
-    /* Global Base */
+    /* Global Streamlit Reset */
+    #MainMenu { visibility: hidden !important; }
+    footer { visibility: hidden !important; }
+    header[data-testid="stHeader"] { 
+        background: transparent !important;
+        backdrop-filter: blur(8px) !important;
+    }
+    
+    /* Base Body Styling */
     html, body, [class*="css"] {
-        font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-        color: #f1f5f9;
+        font-family: 'Plus Jakarta Sans', sans-serif !important;
+        color: #f1f5f9 !important;
     }
     
-    /* Background Tint */
+    /* Dynamic Mesh Gradient Canvas */
     .stApp {
-        background: radial-gradient(circle at 15% 15%, rgba(30, 41, 59, 0.4) 0%, rgba(10, 15, 29, 0.95) 100%), #0a0f1d;
+        background-color: #030712 !important;
+        background-image: 
+            radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.14) 0px, transparent 55%),
+            radial-gradient(at 100% 0%, rgba(168, 85, 247, 0.12) 0px, transparent 55%),
+            radial-gradient(at 50% 100%, rgba(6, 182, 212, 0.08) 0px, transparent 55%) !important;
+        background-attachment: fixed !important;
     }
     
-    /* Typography Overrides */
+    /* Headings */
     h1, h2, h3, h4, h5, h6 {
-        font-family: 'Plus Jakarta Sans', sans-serif;
-        font-weight: 700;
-        letter-spacing: -0.025em;
-        color: #f8fafc;
+        font-family: 'Outfit', sans-serif !important;
+        letter-spacing: -0.025em !important;
+        font-weight: 700 !important;
+        color: #ffffff !important;
     }
     
-    /* Hero Banner Area */
-    .hero-wrapper {
-        position: relative;
-        background: linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, rgba(30, 27, 75, 0.75) 100%);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 20px;
-        padding: 2.2rem 2.5rem;
-        margin-bottom: 2rem;
+    /* Sidebar Overrides */
+    section[data-testid="stSidebar"] {
+        background-color: rgba(11, 15, 25, 0.95) !important;
+        border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+        backdrop-filter: blur(20px) !important;
+    }
+    
+    /* Glass Cards */
+    .glass-panel {
+        background: rgba(17, 24, 39, 0.65);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 18px;
+        padding: 1.75rem 2rem;
         backdrop-filter: blur(16px);
-        box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+        margin-bottom: 1.5rem;
+        transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+    .glass-panel:hover {
+        border-color: rgba(99, 102, 241, 0.3);
+    }
+    
+    /* Hero Header */
+    .hero-box {
+        position: relative;
+        background: linear-gradient(135deg, rgba(17, 24, 39, 0.85) 0%, rgba(30, 27, 75, 0.7) 100%);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 22px;
+        padding: 2.5rem 2.8rem;
+        margin-bottom: 2rem;
+        backdrop-filter: blur(24px);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.15);
         overflow: hidden;
     }
     
-    .hero-badge-live {
+    .hero-glow-badge {
         display: inline-flex;
         align-items: center;
-        gap: 0.5rem;
-        background: rgba(16, 185, 129, 0.12);
-        color: #34d399;
-        border: 1px solid rgba(16, 185, 129, 0.3);
-        padding: 0.3rem 0.85rem;
+        gap: 0.6rem;
+        background: rgba(99, 102, 241, 0.15);
+        border: 1px solid rgba(99, 102, 241, 0.4);
+        color: #a5b4fc;
+        padding: 0.35rem 1rem;
         border-radius: 9999px;
-        font-size: 0.8rem;
+        font-size: 0.82rem;
         font-weight: 700;
-        letter-spacing: 0.05em;
         text-transform: uppercase;
+        letter-spacing: 0.06em;
         margin-bottom: 1rem;
     }
     
-    .pulse-dot {
+    .live-pulse {
         width: 8px;
         height: 8px;
-        background-color: #10b981;
+        background-color: #34d399;
         border-radius: 50%;
-        box-shadow: 0 0 10px #10b981;
+        box-shadow: 0 0 12px #34d399;
         display: inline-block;
+        animation: pulse 2s infinite;
     }
     
-    .hero-title {
-        font-size: 2.4rem;
+    @keyframes pulse {
+        0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.7); }
+        70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(52, 211, 153, 0); }
+        100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
+    }
+    
+    .hero-headline {
+        font-size: 2.6rem;
         font-weight: 800;
         line-height: 1.15;
-        background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 60%, #94a3b8 100%);
+        background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #94a3b8 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         margin-bottom: 0.75rem;
     }
     
-    .hero-desc {
+    .hero-paragraph {
         color: #94a3b8;
-        font-size: 1.05rem;
+        font-size: 1.1rem;
         line-height: 1.6;
-        max-width: 840px;
+        max-width: 880px;
         margin-bottom: 1.5rem;
     }
     
-    /* Metric Pills Bar */
-    .pills-grid {
+    /* Ticker Pill Grid */
+    .metric-ticker-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-        gap: 0.8rem;
+        grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+        gap: 0.9rem;
     }
     
-    .pill-card {
-        background: rgba(15, 23, 42, 0.6);
+    .ticker-pill {
+        background: rgba(15, 23, 42, 0.75);
         border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 12px;
-        padding: 0.75rem 1rem;
-        backdrop-filter: blur(8px);
+        border-radius: 14px;
+        padding: 0.85rem 1.1rem;
+        backdrop-filter: blur(10px);
         transition: transform 0.2s ease, border-color 0.2s ease;
     }
-    .pill-card:hover {
+    .ticker-pill:hover {
         transform: translateY(-2px);
-        border-color: rgba(99, 102, 241, 0.4);
+        border-color: rgba(99, 102, 241, 0.45);
     }
     
-    .pill-label {
-        font-size: 0.75rem;
+    .ticker-label {
+        font-size: 0.72rem;
         color: #64748b;
         text-transform: uppercase;
         font-weight: 700;
-        letter-spacing: 0.04em;
+        letter-spacing: 0.05em;
     }
     
-    .pill-val {
-        font-size: 1.1rem;
-        font-weight: 700;
+    .ticker-val {
+        font-size: 1.2rem;
+        font-weight: 800;
         color: #f8fafc;
-        margin-top: 0.2rem;
+        margin-top: 0.25rem;
         font-family: 'Plus Jakarta Sans', sans-serif;
     }
     
-    /* Valuation Big Card */
-    .valuation-hero-card {
-        background: linear-gradient(135deg, rgba(30, 27, 75, 0.7) 0%, rgba(15, 23, 42, 0.8) 100%);
-        border: 2px solid rgba(99, 102, 241, 0.4);
-        border-radius: 20px;
-        padding: 2.5rem 2rem;
+    /* Valuation Big Display Card */
+    .valuation-glow-card {
+        background: linear-gradient(135deg, rgba(30, 27, 75, 0.85) 0%, rgba(15, 23, 42, 0.95) 100%);
+        border: 2px solid rgba(99, 102, 241, 0.5);
+        border-radius: 24px;
+        padding: 2.8rem 2.2rem;
         text-align: center;
-        box-shadow: 0 20px 45px -10px rgba(99, 102, 241, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15);
-        backdrop-filter: blur(20px);
-        margin: 1.75rem 0;
+        box-shadow: 0 20px 50px -10px rgba(99, 102, 241, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(24px);
+        margin: 2rem 0;
         position: relative;
     }
     
-    .val-pretitle {
+    .val-model-tag {
         color: #818cf8;
-        font-size: 0.85rem;
+        font-size: 0.88rem;
         font-weight: 700;
         text-transform: uppercase;
-        letter-spacing: 0.1em;
-        margin-bottom: 0.4rem;
+        letter-spacing: 0.12em;
+        margin-bottom: 0.5rem;
     }
     
-    .val-amount {
-        font-size: 3.4rem;
+    .val-hero-digits {
+        font-size: 3.8rem;
         font-weight: 800;
         color: #ffffff;
-        font-family: 'JetBrains Mono', 'Plus Jakarta Sans', monospace;
+        font-family: 'JetBrains Mono', monospace;
         letter-spacing: -0.03em;
-        text-shadow: 0 0 40px rgba(99, 102, 241, 0.4);
-        margin: 0.2rem 0;
+        text-shadow: 0 0 45px rgba(99, 102, 241, 0.5);
+        margin: 0.25rem 0;
     }
     
-    .val-subtitle {
+    .val-meta-text {
         color: #cbd5e1;
         font-size: 0.95rem;
         margin-top: 0.4rem;
     }
     
-    .val-band-badge {
+    .val-range-capsule {
         display: inline-block;
-        background: rgba(99, 102, 241, 0.15);
-        border: 1px solid rgba(99, 102, 241, 0.35);
+        background: rgba(99, 102, 241, 0.18);
+        border: 1px solid rgba(99, 102, 241, 0.4);
         color: #c7d2fe;
         border-radius: 9999px;
-        padding: 0.35rem 1.1rem;
-        font-size: 0.85rem;
+        padding: 0.4rem 1.25rem;
+        font-size: 0.88rem;
         font-weight: 600;
-        margin-top: 0.75rem;
+        margin-top: 1rem;
     }
     
     /* Financial / Spec Cards */
-    .stat-card-glass {
-        background: rgba(18, 26, 45, 0.75);
+    .spec-tile {
+        background: rgba(17, 24, 39, 0.7);
         border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 14px;
-        padding: 1.25rem 1rem;
+        border-radius: 16px;
+        padding: 1.35rem 1.15rem;
         text-align: center;
         backdrop-filter: blur(12px);
         transition: transform 0.2s ease, border-color 0.2s ease;
     }
-    .stat-card-glass:hover {
+    .spec-tile:hover {
         transform: translateY(-3px);
-        border-color: rgba(56, 189, 248, 0.35);
+        border-color: rgba(56, 189, 248, 0.4);
     }
     
-    .stat-icon {
-        font-size: 1.4rem;
-        margin-bottom: 0.3rem;
+    .spec-tile-icon {
+        font-size: 1.5rem;
+        margin-bottom: 0.4rem;
     }
     
-    .stat-title {
+    .spec-tile-title {
         font-size: 0.75rem;
         color: #94a3b8;
         text-transform: uppercase;
@@ -229,76 +271,100 @@ st.markdown("""
         font-weight: 700;
     }
     
-    .stat-num {
-        font-size: 1.35rem;
+    .spec-tile-num {
+        font-size: 1.4rem;
         font-weight: 800;
         color: #f8fafc;
         margin-top: 0.25rem;
+        font-family: 'JetBrains Mono', sans-serif;
     }
     
-    .stat-foot {
+    .spec-tile-foot {
         font-size: 0.75rem;
         color: #64748b;
-        margin-top: 0.2rem;
+        margin-top: 0.25rem;
     }
     
-    /* Academic Warning Card */
-    .boundary-banner {
-        background: linear-gradient(135deg, rgba(239, 68, 68, 0.08) 0%, rgba(15, 23, 42, 0.6) 100%);
-        border: 1px solid rgba(239, 68, 68, 0.3);
-        border-left: 5px solid #ef4444;
-        border-radius: 12px;
-        padding: 1.25rem 1.5rem;
-        margin: 1.5rem 0;
-        backdrop-filter: blur(10px);
+    /* Streamlit Input / Widget Deep Styling */
+    div[data-baseweb="input"] {
+        background-color: rgba(17, 24, 39, 0.8) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        border-radius: 12px !important;
+        transition: all 0.2s ease !important;
+    }
+    div[data-baseweb="input"]:focus-within {
+        border-color: #6366f1 !important;
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25) !important;
     }
     
-    /* Streamlit UI Tweaks */
+    div[data-baseweb="select"] > div {
+        background-color: rgba(17, 24, 39, 0.8) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        border-radius: 12px !important;
+        transition: all 0.2s ease !important;
+    }
+    
+    /* Primary Buttons */
+    button[kind="primary"], div.stButton > button {
+        background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #2563eb 100%) !important;
+        color: #ffffff !important;
+        border: none !important;
+        border-radius: 14px !important;
+        font-weight: 700 !important;
+        letter-spacing: -0.01em !important;
+        padding: 0.75rem 1.6rem !important;
+        font-size: 1rem !important;
+        box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.5) !important;
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+    button[kind="primary"]:hover, div.stButton > button:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 15px 35px -5px rgba(79, 70, 229, 0.7) !important;
+    }
+    
+    /* Tabs Overhaul */
     .stTabs [data-baseweb="tab-list"] {
-        gap: 0.5rem;
-        background: rgba(15, 23, 42, 0.6);
-        padding: 0.5rem;
-        border-radius: 14px;
-        border: 1px solid rgba(255, 255, 255, 0.05);
+        gap: 0.6rem;
+        background: rgba(15, 23, 42, 0.75);
+        padding: 0.6rem;
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(14px);
     }
     
     .stTabs [data-baseweb="tab"] {
         height: 48px;
-        border-radius: 10px;
+        border-radius: 11px;
         font-size: 0.95rem;
         font-weight: 600;
         color: #94a3b8;
-        padding: 0 1.2rem;
+        padding: 0 1.35rem;
+        transition: all 0.2s ease;
     }
     
     .stTabs [aria-selected="true"] {
         background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%) !important;
         color: #ffffff !important;
-        box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
+        box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4) !important;
     }
     
     div[data-testid="stForm"] {
-        background: rgba(15, 23, 42, 0.55);
+        background: rgba(15, 23, 42, 0.6);
         border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 18px;
-        padding: 1.75rem 2rem;
-        backdrop-filter: blur(14px);
+        border-radius: 20px;
+        padding: 2rem 2.2rem;
+        backdrop-filter: blur(16px);
     }
     
-    /* Custom Scrollbars */
-    ::-webkit-scrollbar {
-        width: 8px;
-        height: 8px;
-    }
-    ::-webkit-scrollbar-track {
-        background: #0a0f1d;
-    }
-    ::-webkit-scrollbar-thumb {
-        background: #334155;
-        border-radius: 4px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-        background: #475569;
+    /* Academic Disclaimer Banner */
+    .disclaimer-banner {
+        background: linear-gradient(135deg, rgba(239, 68, 68, 0.08) 0%, rgba(15, 23, 42, 0.75) 100%);
+        border: 1px solid rgba(239, 68, 68, 0.35);
+        border-left: 6px solid #ef4444;
+        border-radius: 14px;
+        padding: 1.4rem 1.6rem;
+        margin: 1.5rem 0;
+        backdrop-filter: blur(12px);
     }
 </style>
 """, unsafe_allow_html=True)
@@ -331,22 +397,22 @@ metrics_df, cv_df, meta = load_all_metrics()
 raw_data = load_cached_raw_data()
 
 # ==============================================================================
-# SIDEBAR CONTROLS & SYSTEM HEALTH
+# SIDEBAR CONTROLS & ARCHITECTURE
 # ==============================================================================
 with st.sidebar:
     st.markdown("""
-    <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem;">
-        <span style="font-size: 2rem;">💎</span>
+    <div style="display: flex; align-items: center; gap: 0.85rem; margin-bottom: 1.5rem;">
+        <span style="font-size: 2.2rem;">⚡</span>
         <div>
-            <div style="font-size: 1.2rem; font-weight: 800; color: #f8fafc; letter-spacing: -0.02em;">PropVal ML</div>
-            <div style="font-size: 0.75rem; color: #818cf8; font-weight: 600; text-transform: uppercase;">Automated Valuation Model</div>
+            <div style="font-size: 1.3rem; font-weight: 800; color: #f8fafc; letter-spacing: -0.02em;">PropVal Studio</div>
+            <div style="font-size: 0.75rem; color: #818cf8; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;">Next-Gen Valuation Engine</div>
         </div>
     </div>
     """, unsafe_allow_html=True)
     
-    st.markdown("### ⚙️ Quick Scenario Presets")
+    st.markdown("#### 🎯 Quick Property Scenarios")
     preset_choice = st.selectbox(
-        "Load Preconfigured Home:",
+        "Choose Real Estate Archetype:",
         [
             "Standard Median Suburban Home",
             "Modern High-End Luxury Residence",
@@ -357,9 +423,9 @@ with st.sidebar:
     )
     
     st.markdown("---")
-    st.markdown("### 🤖 Regression Engine")
+    st.markdown("#### 🤖 Machine Learning Model")
     model_selection = st.selectbox(
-        "Inference Model:",
+        "Active Estimator:",
         [
             "Auto Best Model (XGBoost)",
             "Compare All 5 Models Simultaneously",
@@ -372,23 +438,23 @@ with st.sidebar:
     )
     
     st.markdown("---")
-    st.markdown("### 🖥️ ML System Status")
+    st.markdown("#### 🛡️ Engineering Safeguards")
     st.markdown("""
-    <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 1rem; font-size: 0.8rem;">
-        <div style="display: flex; justify-content: space-between; margin-bottom: 0.4rem;">
-            <span style="color: #94a3b8;">Pipeline State:</span>
-            <span style="color: #34d399; font-weight: 700;">● Active</span>
+    <div style="background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 14px; padding: 1.1rem; font-size: 0.82rem;">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+            <span style="color: #94a3b8;">Leakage Prevention:</span>
+            <span style="color: #38bdf8; font-weight: 700;">Strict 80:20 Split</span>
         </div>
-        <div style="display: flex; justify-content: space-between; margin-bottom: 0.4rem;">
-            <span style="color: #94a3b8;">Data Leakage:</span>
-            <span style="color: #38bdf8; font-weight: 700;">0.0% (Verified)</span>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+            <span style="color: #94a3b8;">Cross Validation:</span>
+            <span style="color: #34d399; font-weight: 700;">5-Fold Stratified</span>
         </div>
-        <div style="display: flex; justify-content: space-between; margin-bottom: 0.4rem;">
-            <span style="color: #94a3b8;">Engine Latency:</span>
-            <span style="color: #f8fafc; font-weight: 700;">1.63 ms</span>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+            <span style="color: #94a3b8;">Inference Speed:</span>
+            <span style="color: #f8fafc; font-weight: 700;">1.63 ms / sample</span>
         </div>
         <div style="display: flex; justify-content: space-between;">
-            <span style="color: #94a3b8;">Unit Tests:</span>
+            <span style="color: #94a3b8;">Automated Tests:</span>
             <span style="color: #34d399; font-weight: 700;">21 / 21 Passed</span>
         </div>
     </div>
@@ -400,39 +466,40 @@ with st.sidebar:
 
 
 # ==============================================================================
-# HERO BANNER WITH LUXURY METRICS BAR
+# HERO SECTION
 # ==============================================================================
 st.markdown("""
-<div class="hero-wrapper">
-    <div class="hero-badge-live">
-        <span class="pulse-dot"></span>
-        Interactive Valuation & Comparative Research Benchmark
+<div class="hero-box">
+    <div class="hero-glow-badge">
+        <span class="live-pulse"></span>
+        Production Valuation Benchmark &bull; Ames Housing Dataset
     </div>
-    <div class="hero-title">Intelligent Real Estate Valuation Engine</div>
-    <div class="hero-desc">
-        A publication-grade Machine Learning benchmark comparing five regression paradigms on 1,460 residential properties 
-        from the Ames Housing dataset. Features zero data leakage, 5-fold cross validation, and instant multi-model inference.
+    <div class="hero-headline">Intelligent Real Estate Valuation Studio</div>
+    <div class="hero-paragraph">
+        An academic machine learning system comparing five regression algorithms on 1,460 authentic 
+        residential property transactions. Featuring strict zero data leakage, automated feature engineering, 
+        and instantaneous multi-model inference.
     </div>
-    <div class="pills-grid">
-        <div class="pill-card">
-            <div class="pill-label">🏆 Champion Algorithm</div>
-            <div class="pill-val" style="color: #818cf8;">XGBoost</div>
+    <div class="metric-ticker-grid">
+        <div class="ticker-pill">
+            <div class="ticker-label">🏆 Winning Algorithm</div>
+            <div class="ticker-val" style="color: #818cf8;">XGBoost</div>
         </div>
-        <div class="pill-card">
-            <div class="pill-label">🎯 Test R² Accuracy</div>
-            <div class="pill-val" style="color: #34d399;">0.9143</div>
+        <div class="ticker-pill">
+            <div class="ticker-label">🎯 Test Accuracy (R²)</div>
+            <div class="ticker-val" style="color: #34d399;">0.9143</div>
         </div>
-        <div class="pill-card">
-            <div class="pill-label">📉 Test RMSE Error</div>
-            <div class="pill-val" style="color: #38bdf8;">$25,635</div>
+        <div class="ticker-pill">
+            <div class="ticker-label">📉 Test Error (RMSE)</div>
+            <div class="ticker-val" style="color: #38bdf8;">$25,635</div>
         </div>
-        <div class="pill-card">
-            <div class="pill-label">⚡ Inference Latency</div>
-            <div class="pill-val" style="color: #f59e0b;">1.63 ms</div>
+        <div class="ticker-pill">
+            <div class="ticker-label">⚡ Inference Latency</div>
+            <div class="ticker-val" style="color: #f59e0b;">1.63 ms</div>
         </div>
-        <div class="pill-card">
-            <div class="pill-label">📍 Market Focus</div>
-            <div class="pill-val" style="color: #f43f5e;">Ames, IA (USD)</div>
+        <div class="ticker-pill">
+            <div class="ticker-label">📍 Geographic Focus</div>
+            <div class="ticker-val" style="color: #f43f5e;">Ames, IA (USD)</div>
         </div>
     </div>
 </div>
@@ -440,11 +507,11 @@ st.markdown("""
 
 # Main Navigation Tabs
 tab_calc, tab_benchmark, tab_importance, tab_eda, tab_docs = st.tabs([
-    "💎 Live Valuation & Financial Engine",
-    "📊 Model Benchmark & Diagnostics",
-    "🔬 Feature Importance & ROI Simulator",
+    "💎 Live Valuation & Financial Studio",
+    "📊 Model Benchmark & Diagnostic Gallery",
+    "🔬 Feature Importance & Renovation Simulator",
     "📈 Exploratory Market Analytics",
-    "📜 Academic Report & Research Bounds"
+    "📜 Academic Report & Geographic Bounds"
 ])
 
 # Populate preset values
@@ -475,15 +542,15 @@ elif preset_choice == "Vintage Character Bungalow":
     })
 
 # ==============================================================================
-# TAB 1: VALUATION & FINANCIAL ESTIMATOR
+# TAB 1: VALUATION & FINANCIAL STUDIO
 # ==============================================================================
 with tab_calc:
-    st.markdown("### 🏡 Configure Property Specifications")
-    st.markdown("Input property characteristics below. The automated valuation model applies the fitted `ColumnTransformer` and predicts fair market value.")
+    st.markdown("### 🏡 Configure Property Dimensions & Characteristics")
+    st.markdown("Adjust structural specifications below to estimate fair market value through the production preprocessing pipeline.")
     
     with st.form("valuation_form"):
-        # Section 1
-        st.markdown("<h5 style='color: #818cf8; margin-bottom: 0.8rem;'>1. Dimensions and Scale</h5>", unsafe_allow_html=True)
+        # Section 1: Dimensions
+        st.markdown("<h5 style='color: #818cf8; margin-bottom: 0.8rem;'>1. Scale, Layout, and Square Footage</h5>", unsafe_allow_html=True)
         c1, c2, c3, c4 = st.columns(4)
         with c1:
             gr_liv_area = st.number_input("Above-Grade Living Area (sq ft):", min_value=350, max_value=7500, value=int(default_vals["GrLivArea"]), step=50)
@@ -498,20 +565,20 @@ with tab_calc:
             half_bath = st.number_input("Half Bathrooms:", min_value=0, max_value=3, value=int(default_vals["HalfBath"]))
             garage_cars = st.number_input("Garage Car Capacity:", min_value=0, max_value=4, value=int(default_vals["GarageCars"]))
 
-        # Section 2
-        st.markdown("<h5 style='color: #818cf8; margin-top: 1rem; margin-bottom: 0.8rem;'>2. Quality, Condition, and Age Metrics</h5>", unsafe_allow_html=True)
+        # Section 2: Quality & Age
+        st.markdown("<h5 style='color: #818cf8; margin-top: 1rem; margin-bottom: 0.8rem;'>2. Quality, Finish & Construction Timeline</h5>", unsafe_allow_html=True)
         q1, q2, q3, q4 = st.columns(4)
         with q1:
-            overall_qual = st.slider("Overall Quality (1: Poor → 10: Excellent):", min_value=1, max_value=10, value=int(default_vals["OverallQual"]))
+            overall_qual = st.slider("Overall Finish Quality (1: Poor → 10: Excellent):", min_value=1, max_value=10, value=int(default_vals["OverallQual"]))
         with q2:
             overall_cond = st.slider("Overall Condition (1: Poor → 10: Excellent):", min_value=1, max_value=10, value=int(default_vals["OverallCond"]))
         with q3:
             year_built = st.number_input("Year Built:", min_value=1870, max_value=2026, value=int(default_vals["YearBuilt"]))
         with q4:
-            year_remod = st.number_input("Year Remodeled / Modernized:", min_value=int(year_built), max_value=2026, value=max(int(year_built), int(default_vals["YearRemodAdd"])))
+            year_remod = st.number_input("Year Remodeled / Added:", min_value=int(year_built), max_value=2026, value=max(int(year_built), int(default_vals["YearRemodAdd"])))
 
-        # Section 3
-        st.markdown("<h5 style='color: #818cf8; margin-top: 1rem; margin-bottom: 0.8rem;'>3. Architecture, Materials & Ames Neighborhood</h5>", unsafe_allow_html=True)
+        # Section 3: Architecture & Location
+        st.markdown("<h5 style='color: #818cf8; margin-top: 1rem; margin-bottom: 0.8rem;'>3. Architecture, Location & Amenities</h5>", unsafe_allow_html=True)
         s1, s2, s3, s4 = st.columns(4)
         
         neighborhood_list = [
@@ -525,18 +592,18 @@ with tab_calc:
         
         with s1:
             neighborhood = st.selectbox("Ames Neighborhood:", neighborhood_list, index=neighborhood_list.index(default_vals["Neighborhood"]) if default_vals["Neighborhood"] in neighborhood_list else 0)
-            house_style = st.selectbox("Dwelling Style:", house_styles, index=house_styles.index(default_vals["HouseStyle"]) if default_vals["HouseStyle"] in house_styles else 0)
+            house_style = st.selectbox("Dwelling Architecture:", house_styles, index=house_styles.index(default_vals["HouseStyle"]) if default_vals["HouseStyle"] in house_styles else 0)
         with s2:
-            kitchen_qual = st.selectbox("Kitchen Finish:", quality_grades, index=quality_grades.index(default_vals["KitchenQual"]) if default_vals["KitchenQual"] in quality_grades else 1, format_func=lambda x: {"Ex": "⭐ Excellent", "Gd": "✨ Good", "TA": "🏠 Typical", "Fa": "🔨 Fair"}.get(x, x))
-            exter_qual = st.selectbox("Exterior Quality:", quality_grades, index=quality_grades.index(default_vals["ExterQual"]) if default_vals["ExterQual"] in quality_grades else 1, format_func=lambda x: {"Ex": "⭐ Excellent", "Gd": "✨ Good", "TA": "🏠 Typical", "Fa": "🔨 Fair"}.get(x, x))
+            kitchen_qual = st.selectbox("Kitchen Finish:", quality_grades, index=quality_grades.index(default_vals["KitchenQual"]) if default_vals["KitchenQual"] in quality_grades else 1, format_func=lambda x: {"Ex": "⭐ Luxury (Ex)", "Gd": "✨ Good (Gd)", "TA": "🏠 Typical (TA)", "Fa": "🔨 Fair (Fa)"}.get(x, x))
+            exter_qual = st.selectbox("Exterior Material:", quality_grades, index=quality_grades.index(default_vals["ExterQual"]) if default_vals["ExterQual"] in quality_grades else 1, format_func=lambda x: {"Ex": "⭐ Luxury (Ex)", "Gd": "✨ Good (Gd)", "TA": "🏠 Typical (TA)", "Fa": "🔨 Fair (Fa)"}.get(x, x))
         with s3:
-            central_air = st.selectbox("Central Air Conditioning:", ["Y", "N"], index=0 if default_vals["CentralAir"] == "Y" else 1, format_func=lambda x: "Yes (HVAC Central)" if x == "Y" else "No")
+            central_air = st.selectbox("Central Air Conditioning:", ["Y", "N"], index=0 if default_vals["CentralAir"] == "Y" else 1, format_func=lambda x: "Yes (Central HVAC)" if x == "Y" else "No")
             fireplaces = st.number_input("Fireplaces:", min_value=0, max_value=4, value=int(default_vals["Fireplaces"]))
         with s4:
             lot_config = st.selectbox("Lot Configuration:", ['Inside', 'Corner', 'CulDSac', 'FR2', 'FR3'], index=0)
-            land_contour = st.selectbox("Topography:", ['Lvl', 'Bnk', 'HLS', 'Low'], format_func=lambda x: {"Lvl": "Level / Flat", "Bnk": "Banked", "HLS": "Hillside", "Low": "Depression"}.get(x, x))
+            land_contour = st.selectbox("Land Contour:", ['Lvl', 'Bnk', 'HLS', 'Low'], format_func=lambda x: {"Lvl": "Level / Flat", "Bnk": "Banked", "HLS": "Hillside", "Low": "Depression"}.get(x, x))
 
-        submitted = st.form_submit_button("⚡ Compute Fair Market Valuation", use_container_width=True, type="primary")
+        submitted = st.form_submit_button("⚡ Calculate Property Valuation", use_container_width=True, type="primary")
 
     property_input = {
         "GrLivArea": gr_liv_area,
@@ -585,28 +652,27 @@ with tab_calc:
             best_val = comp_df[comp_df["Algorithm"] == "XGBoost"]["Estimated Valuation"].iloc[0]
             avg_val = comp_df["Estimated Valuation"].mean()
             
-            # Big Display
             st.markdown(f"""
-            <div class="valuation-hero-card">
-                <div class="val-pretitle">Consensus Primary Valuation &bull; XGBoost Champion Engine</div>
-                <div class="val-amount">${best_val:,.2f} USD</div>
-                <div class="val-subtitle">Multi-Model Ensemble Mean: <b>${avg_val:,.2f}</b> &bull; Variance Range: <b>${comp_df['Estimated Valuation'].max() - comp_df['Estimated Valuation'].min():,.0f}</b></div>
-                <div class="val-band-badge">95% Confidence Accuracy Band: ${best_val - 25635:,.0f} &mdash; ${best_val + 25635:,.0f}</div>
+            <div class="valuation-glow-card">
+                <div class="val-model-tag">Consensus Primary Valuation &bull; XGBoost Champion Engine</div>
+                <div class="val-hero-digits">${best_val:,.2f} USD</div>
+                <div class="val-meta-text">Multi-Model Ensemble Mean: <b>${avg_val:,.2f}</b> &bull; Variance Range: <b>${comp_df['Estimated Valuation'].max() - comp_df['Estimated Valuation'].min():,.0f}</b></div>
+                <div class="val-range-capsule">Expected Accuracy Range (± RMSE): <b>${best_val - 25635:,.0f} &mdash; ${best_val + 25635:,.0f} USD</b></div>
             </div>
             """, unsafe_allow_html=True)
             
-            # Visual Bar Chart for Multi-Model
-            fig, ax = plt.subplots(figsize=(9, 3.5), facecolor="#0f172a")
-            ax.set_facecolor("#0f172a")
+            # Interactive Multi-Model Plot with Custom Obsidian Palette
+            fig, ax = plt.subplots(figsize=(9, 3.6), facecolor="#030712")
+            ax.set_facecolor("#030712")
             colors = ["#38bdf8", "#34d399", "#a855f7", "#f59e0b", "#f43f5e"]
-            bars = ax.barh(comp_df["Algorithm"], comp_df["Estimated Valuation"], color=colors, height=0.55, edgecolor="#334155")
-            ax.set_xlabel("Predicted Property Valuation ($ USD)", color="#cbd5e1", fontweight="bold")
-            ax.tick_params(colors="#cbd5e1", labelsize=10)
+            bars = ax.barh(comp_df["Algorithm"], comp_df["Estimated Valuation"], color=colors, height=0.55, edgecolor="#1f2937")
+            ax.set_xlabel("Predicted Property Valuation ($ USD)", color="#cbd5e1", fontweight="bold", fontsize=11)
+            ax.tick_params(colors="#94a3b8", labelsize=10)
             for spine in ax.spines.values():
-                spine.set_color("#334155")
+                spine.set_color("#1f2937")
             for bar in bars:
                 w = bar.get_width()
-                ax.text(w + 3000, bar.get_y() + bar.get_height() / 2, f"${w:,.0f}", va="center", color="#f8fafc", fontsize=9, fontweight="bold")
+                ax.text(w + 2500, bar.get_y() + bar.get_height() / 2, f"${w:,.0f}", va="center", color="#f8fafc", fontsize=9, fontweight="bold")
             ax.set_xlim(0, max(comp_df["Estimated Valuation"]) * 1.18)
             plt.tight_layout()
             st.pyplot(fig)
@@ -618,11 +684,11 @@ with tab_calc:
             price = res['predicted_price_usd']
             
             st.markdown(f"""
-            <div class="valuation-hero-card">
-                <div class="val-pretitle">Fair Market Valuation Estimate ({res['model_used']})</div>
-                <div class="val-amount">${price:,.2f} USD</div>
-                <div class="val-subtitle">Calibrated on authentic Ames, Iowa Real Estate transactions &bull; Denominated in USD</div>
-                <div class="val-band-badge">Expected Accuracy Band (± RMSE): <b>${price - 25635:,.0f} &mdash; ${price + 25635:,.0f}</b></div>
+            <div class="valuation-glow-card">
+                <div class="val-model-tag">Fair Market Valuation ({res['model_used']})</div>
+                <div class="val-hero-digits">${price:,.2f} USD</div>
+                <div class="val-meta-text">Calibrated on authentic Ames, Iowa Real Estate transactions &bull; Denominated in USD</div>
+                <div class="val-range-capsule">Expected Accuracy Range (± RMSE): <b>${price - 25635:,.0f} &mdash; ${price + 25635:,.0f}</b></div>
             </div>
             """, unsafe_allow_html=True)
 
@@ -644,52 +710,51 @@ with tab_calc:
         b1, b2, b3, b4 = st.columns(4)
         with b1:
             st.markdown(f"""
-            <div class="stat-card-glass">
-                <div class="stat-icon">📐</div>
-                <div class="stat-title">Total Usable Area</div>
-                <div class="stat-num">{total_sf:,.0f} sq ft</div>
-                <div class="stat-foot">{gr_liv_area} ag + {total_bsmt_sf} bsmt</div>
+            <div class="spec-tile">
+                <div class="spec-tile-icon">📐</div>
+                <div class="spec-tile-title">Total Usable Area</div>
+                <div class="spec-tile-num">{total_sf:,.0f} sq ft</div>
+                <div class="spec-tile-foot">{gr_liv_area} ag + {total_bsmt_sf} bsmt</div>
             </div>
             """, unsafe_allow_html=True)
         with b2:
             st.markdown(f"""
-            <div class="stat-card-glass">
-                <div class="stat-icon">💵</div>
-                <div class="stat-title">Price per Sq. Ft.</div>
-                <div class="stat-num">${price_per_sqft:.1f}</div>
-                <div class="stat-foot">Ames avg: ~$120 / sq ft</div>
+            <div class="spec-tile">
+                <div class="spec-tile-icon">💵</div>
+                <div class="spec-tile-title">Price per Sq. Ft.</div>
+                <div class="spec-tile-num">${price_per_sqft:.1f}</div>
+                <div class="spec-tile-foot">Ames avg: ~$120 / sq ft</div>
             </div>
             """, unsafe_allow_html=True)
         with b3:
             st.markdown(f"""
-            <div class="stat-card-glass">
-                <div class="stat-icon">⏳</div>
-                <div class="stat-title">Effective Age</div>
-                <div class="stat-num">{2026 - year_built} yrs</div>
-                <div class="stat-foot">Renovated: {"Yes" if year_remod > year_built else "No"}</div>
+            <div class="spec-tile">
+                <div class="spec-tile-icon">⏳</div>
+                <div class="spec-tile-title">Effective Age</div>
+                <div class="spec-tile-num">{2026 - year_built} yrs</div>
+                <div class="spec-tile-foot">Renovated: {"Yes" if year_remod > year_built else "No"}</div>
             </div>
             """, unsafe_allow_html=True)
         with b4:
             st.markdown(f"""
-            <div class="stat-card-glass">
-                <div class="stat-icon">🏦</div>
-                <div class="stat-title">Est. Monthly Payment</div>
-                <div class="stat-num">${total_monthly:,.0f} /mo</div>
-                <div class="stat-foot">P&I + Tax + Ins (20% down)</div>
+            <div class="spec-tile">
+                <div class="spec-tile-icon">🏦</div>
+                <div class="spec-tile-title">Est. Monthly Payment</div>
+                <div class="spec-tile-num">${total_monthly:,.0f} /mo</div>
+                <div class="spec-tile-foot">P&I + Tax + Ins (20% down)</div>
             </div>
             """, unsafe_allow_html=True)
 
     except Exception as e:
-        st.error(f"Inference Engine Alert: {e}")
+        st.error(f"Inference Alert: {e}")
 
 # ==============================================================================
-# TAB 2: MODEL BENCHMARK & COMPARISON
+# TAB 2: MODEL BENCHMARK & DIAGNOSTIC GALLERY
 # ==============================================================================
 with tab_benchmark:
     st.markdown("### 🏆 Comprehensive Model Evaluation Benchmark")
     st.markdown("All five algorithms were evaluated on an untouched held-out 20% test split ($N=292$) and cross-validated with 5 stratified folds.")
     
-    # Modern Benchmark Table
     if metrics_df is not None:
         styled_df = metrics_df.copy()
         styled_df["MAE ($)"] = styled_df["MAE"].apply(lambda x: f"${x:,.2f}")
@@ -705,7 +770,7 @@ with tab_benchmark:
         )
 
     st.markdown("---")
-    st.markdown("### 🖼️ Diagnostic Figure Gallery")
+    st.markdown("### 🖼️ Diagnostic Figure Studio")
     
     diag_tab1, diag_tab2, diag_tab3, diag_tab4 = st.tabs([
         "📊 Error & R² Bar Charts",
@@ -750,19 +815,19 @@ with tab_benchmark:
 # ==============================================================================
 with tab_importance:
     st.markdown("### 🔬 Feature Importance & Renovation ROI Simulator")
-    st.markdown("Learn which attributes drive home valuations in Ames and simulate the monetary impact of home additions or upgrades.")
+    st.markdown("Discover the structural and location factors that dictate property value and simulate renovation ROI.")
     
     st.image(os.path.join(FIGURES_DIR, "feature_importance.png"), caption="Figure 7: Top 15 Predictor Features Ranked by Relative Importance (XGBoost)", use_container_width=True)
     
     st.markdown("---")
     st.markdown("### 🛠️ Interactive Renovation Value Simulator")
-    st.markdown("Select a renovation project below to see how our trained model estimates the incremental valuation uplift:")
+    st.markdown("Simulate common property remodeling projects to evaluate model-estimated price appreciation:")
     
     sim_col1, sim_col2 = st.columns(2)
     with sim_col1:
         base_sample = get_default_property_input()
         renovation_type = st.radio(
-            "Select Renovation Project:",
+            "Select Remodeling Project:",
             [
                 "Kitchen Remodel: Upgrade from Typical (TA) to Luxury (Ex)",
                 "Add 400 sq ft Finished Basement Addition",
@@ -772,7 +837,6 @@ with tab_importance:
         )
     
     with sim_col2:
-        # Base prediction
         base_pred = predict_house_price(base_sample)["predicted_price_usd"]
         mod_sample = base_sample.copy()
         
@@ -792,10 +856,10 @@ with tab_importance:
         diff = upgraded_pred - base_pred
         
         st.markdown(f"""
-        <div style="background: rgba(15, 23, 42, 0.75); border: 1px solid rgba(52, 211, 153, 0.3); border-radius: 14px; padding: 1.5rem; text-align: center;">
-            <div style="font-size: 0.8rem; color: #94a3b8; text-transform: uppercase; font-weight: 700;">Simulated Valuation Uplift</div>
-            <div style="font-size: 2.2rem; font-weight: 800; color: #34d399; font-family: 'JetBrains Mono'; margin: 0.2rem 0;">+${diff:,.2f}</div>
-            <div style="font-size: 0.9rem; color: #cbd5e1;">Base Price: <b>${base_pred:,.0f}</b> &rarr; Post-Renovation: <b>${upgraded_pred:,.0f} USD</b></div>
+        <div style="background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(52, 211, 153, 0.35); border-radius: 16px; padding: 1.8rem; text-align: center; box-shadow: 0 10px 30px rgba(52, 211, 153, 0.15);">
+            <div style="font-size: 0.82rem; color: #94a3b8; text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em;">Estimated Valuation Appreciation</div>
+            <div style="font-size: 2.4rem; font-weight: 800; color: #34d399; font-family: 'JetBrains Mono'; margin: 0.25rem 0;">+${diff:,.2f} USD</div>
+            <div style="font-size: 0.95rem; color: #cbd5e1;">Baseline: <b>${base_pred:,.0f}</b> &rarr; Post-Upgrade: <b>${upgraded_pred:,.0f} USD</b></div>
         </div>
         """, unsafe_allow_html=True)
 
@@ -815,23 +879,23 @@ with tab_eda:
     with e4:
         st.metric("IQR Spread", f"${raw_data['SalePrice'].quantile(0.75) - raw_data['SalePrice'].quantile(0.25):,.0f}")
 
-    st.markdown("#### 1. Interactive Data Preview")
+    st.markdown("#### 1. Interactive Raw Data Explorer")
     st.dataframe(raw_data[["Id", "SalePrice", "OverallQual", "GrLivArea", "TotalBsmtSF", "YearBuilt", "Neighborhood", "HouseStyle"]].head(15), use_container_width=True)
 
     st.markdown("#### 2. Target Variable (`SalePrice`) Distribution & Quality Breakdown")
-    fig_eda, (ax_hist, ax_box) = plt.subplots(1, 2, figsize=(12, 4.5), facecolor="#0f172a")
+    fig_eda, (ax_hist, ax_box) = plt.subplots(1, 2, figsize=(12, 4.5), facecolor="#030712")
     for ax in (ax_hist, ax_box):
-        ax.set_facecolor("#0f172a")
-        ax.tick_params(colors="#cbd5e1")
+        ax.set_facecolor("#030712")
+        ax.tick_params(colors="#94a3b8")
         for spine in ax.spines.values():
-            spine.set_color("#334155")
+            spine.set_color("#1f2937")
             
     # Histogram
     sns.histplot(raw_data["SalePrice"], kde=True, color="#38bdf8", ax=ax_hist, bins=35)
     ax_hist.set_title("SalePrice Distribution (Right-Skewed)", color="#f8fafc", fontweight="bold")
     ax_hist.set_xlabel("SalePrice ($ USD)", color="#cbd5e1")
     ax_hist.axvline(raw_data["SalePrice"].median(), color="#f43f5e", linestyle="--", label=f"Median: ${raw_data['SalePrice'].median():,.0f}")
-    ax_hist.legend(facecolor="#1e293b", edgecolor="#334155", labelcolor="#f8fafc")
+    ax_hist.legend(facecolor="#111827", edgecolor="#374151", labelcolor="#f8fafc")
     
     # Boxplot by Quality
     sns.boxplot(x="OverallQual", y="SalePrice", data=raw_data, palette="Blues_r", ax=ax_box)
@@ -850,9 +914,9 @@ with tab_docs:
     st.markdown("### 📜 Academic Research Report & Domain Disclosures")
     
     st.markdown("""
-    <div class="boundary-banner">
-        <h4 style="color: #f87171; margin-top: 0; font-size: 1.1rem;">⚠️ Fundamental Academic Disclosures & Domain Boundaries</h4>
-        <ol style="color: #cbd5e1; margin-bottom: 0; line-height: 1.6;">
+    <div class="disclaimer-banner">
+        <h4 style="color: #f87171; margin-top: 0; font-size: 1.15rem;">⚠️ Academic Disclosures & Real-World Domain Boundaries</h4>
+        <ol style="color: #cbd5e1; margin-bottom: 0; line-height: 1.65;">
             <li><b>Geographic & Currency Calibration</b>: Models are calibrated on transactions from Ames, Iowa (United States) denominated strictly in <b>US Dollars ($ USD)</b>. Predictions cannot be treated as valid valuations for Indian properties (INR), which are governed by disparate regulatory systems (RERA), floor rise indices, municipal circle rates, and metro transit premiums.</li>
             <li><b>Inland Midwest Geography (Absence of Coastal Views)</b>: Ames is an inland Midwestern city. There are <b>no ocean, sea, or coastal attributes</b> in this dataset. We honestly document this limitation rather than fabricating synthetic ocean-view values.</li>
             <li><b>Constructed Residential Dwellings vs. Vacant Land</b>: All records represent constructed residential dwellings with foundations and structures. Vacant plots and agricultural land valuation are out of scope.</li>
@@ -877,7 +941,7 @@ with tab_docs:
 st.markdown("---")
 st.markdown(
     "<div style='text-align: center; color: #64748b; font-size: 0.85rem; padding: 1.25rem 0;'>"
-    "PropVal ML &bull; House Price Prediction Using Machine Learning and Comparative Analysis of Regression Models &bull; Ames Housing Dataset"
+    "PropVal Studio &bull; House Price Prediction Using Machine Learning and Comparative Analysis of Regression Models &bull; Ames Housing Dataset"
     "</div>",
     unsafe_allow_html=True
 )
