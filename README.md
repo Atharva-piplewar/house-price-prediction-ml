@@ -85,8 +85,13 @@ ml final project/
 │   ├── test_preprocessing.py       # Imputation, encoding & feature engineering tests
 │   ├── test_predict.py             # Input bounds validation & multi-model inference tests
 │   └── test_models.py              # Artifact integrity & benchmark threshold tests
-└── reports/
-    └── final_report.md             # In-depth academic capstone final report
+├── reports/
+│   ├── final_report.md             # In-depth academic capstone final report
+│   ├── model_card.md               # Industry-standard model card (Mitchell et al.)
+│   └── error_analysis.md           # Deep-dive error analysis & failure modes report
+└── .github/
+    └── workflows/
+        └── ml_benchmark.yml        # Automated CI/CD test suite & PR benchmark report
 ```
 
 ---

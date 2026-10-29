@@ -1,5 +1,5 @@
 {
-    "timestamp": "2026-10-21 15:34:18",
+    "timestamp": "2026-10-28 09:22:03",
     "best_model": "XGBoost",
     "selection_criterion": "Lowest held-out Root Mean Squared Error (RMSE) on 20% test split",
     "models_evaluated": [
@@ -16,8 +16,8 @@
             "MSE": 1100210323.67,
             "RMSE": 33169.42,
             "R2": 0.8566,
-            "Training_Time_Sec": 0.0144,
-            "Prediction_Time_Sec": 0.00036,
+            "Training_Time_Sec": 0.0143,
+            "Prediction_Time_Sec": 0.00051,
             "Model_File": "linear_regression.joblib"
         },
         {
@@ -26,8 +26,8 @@
             "MSE": 858969818.42,
             "RMSE": 29308.19,
             "R2": 0.888,
-            "Training_Time_Sec": 0.3168,
-            "Prediction_Time_Sec": 0.04354,
+            "Training_Time_Sec": 0.3384,
+            "Prediction_Time_Sec": 0.04407,
             "Model_File": "random_forest.joblib"
         },
         {
@@ -36,8 +36,8 @@
             "MSE": 1621728188.84,
             "RMSE": 40270.69,
             "R2": 0.7886,
-            "Training_Time_Sec": 0.0967,
-            "Prediction_Time_Sec": 0.03378,
+            "Training_Time_Sec": 0.0751,
+            "Prediction_Time_Sec": 0.03094,
             "Model_File": "support_vector_regression.joblib"
         },
         {
@@ -46,8 +46,8 @@
             "MSE": 682235557.16,
             "RMSE": 26119.64,
             "R2": 0.9111,
-            "Training_Time_Sec": 0.7015,
-            "Prediction_Time_Sec": 0.00185,
+            "Training_Time_Sec": 0.6382,
+            "Prediction_Time_Sec": 0.00223,
             "Model_File": "gradient_boosting.joblib"
         },
         {
@@ -56,8 +56,8 @@
             "MSE": 657141952.0,
             "RMSE": 25634.78,
             "R2": 0.9143,
-            "Training_Time_Sec": 0.2666,
-            "Prediction_Time_Sec": 0.00163,
+            "Training_Time_Sec": 0.2638,
+            "Prediction_Time_Sec": 0.0014,
             "Model_File": "xgboost.joblib"
         }
     ],
@@ -71,8 +71,8 @@
         },
         {
             "Model": "Random Forest",
-            "CV_R2_Mean": 0.8406309440983385,
-            "CV_R2_Std": 0.055846723517944646,
+            "CV_R2_Mean": 0.8406309440983384,
+            "CV_R2_Std": 0.05584672351794463,
             "CV_RMSE_Mean": 30439.96451783549,
             "CV_RMSE_Std": 5819.115154264037
         },
